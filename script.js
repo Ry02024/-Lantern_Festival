@@ -59,7 +59,7 @@ function startLanternFestival() {
     createLanterns(lanternsPerRow, true); // 初期表示で一列のランタンを生成
 
     setInterval(() => {
-        createLanterns(50); // 一度に2個のランタンを生成
+        createLanterns(10); // 一度に2個のランタンを生成
     }, 3000); // 3秒ごとにランタンを生成
 }
 
