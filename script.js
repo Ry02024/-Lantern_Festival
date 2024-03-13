@@ -53,19 +53,21 @@ function startLanternFestival() {
     // 最初に一列のランタンを生成
     const lanternContainer = document.getElementById('lanterns');
     const containerWidth = lanternContainer.offsetWidth;
-    const lanternWidth = 20; // ランタンの幅
-    const lanternsPerRow = Math.floor(containerWidth / lanternWidth);
+    const lanternWidth = 20; // ランタンの幅をpx単位で指定
+    const lanternsPerRow = Math.floor(containerWidth / lanternWidth); // 画面幅に収まるランタンの数
 
-    createLanterns(lanternsPerRow, true); // 初期表示で一列のランタンを生成
+    createLanterns(lanternsPerRow, true); // 画面の下一面にランタンを一列に敷き詰めて生成
 
-    setInterval(() => {
-        createLanterns(10); // 一度に2個のランタンを生成
-    }, 3000); // 3秒ごとにランタンを生成
+    // 一列のランタンが生成された後、定期的にランタンを追加
+    setTimeout(() => {
+        setInterval(() => {
+            createLanterns(10); // 一度に10個のランタンを生成
+        }, 3000); // 3秒ごとにランタンを生成
+    }, 300); // 最初のランタンが若干上がり始めてから次のランタン生成を開始
 }
 
+// ページ読み込み完了時にランタンフェスティバルを開始
 document.addEventListener('DOMContentLoaded', startLanternFestival);
-
-startLanternFestival();
 
 // スワイプ操作の検出
 let startX, startY, endX, endY;
