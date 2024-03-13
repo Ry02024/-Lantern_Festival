@@ -84,16 +84,17 @@ function touchEnd(event) {
 document.addEventListener('touchstart', touchStart);
 document.addEventListener('touchend', touchEnd);
 
-// スワイプに応じてランタンに風の効果を適用する関数
+// スワイプに応じてランタンに風の効果を適用する関数（拡張版）
 function applyWindToLanterns(distanceX, distanceY) {
     const lanterns = document.querySelectorAll('.lantern');
+    const windStrength = Math.sqrt(distanceX * distanceX + distanceY * distanceY) * 0.1; // 風の強さを計算
 
     lanterns.forEach(lantern => {
-        const styles = window.getComputedStyle(lantern);
-        const matrix = new WebKitCSSMatrix(styles.transform);
-        const newX = matrix.m41 + distanceX * 0.1;
-        const newY = matrix.m42 - distanceY * 0.1;
-
-        lantern.style.transform = `translate(${newX}px, ${newY}px)`;
+        const duration = 20 + Math.random() * 30; // 風による移動の持続時間
+        lantern.style.transition = `transform ${duration}s ease-in-out`;
+        const angle = Math.atan2(distanceY, distanceX); // 風の角度
+        const moveX = Math.cos(angle) * windStrength;
+        const moveY = Math.sin(angle) * windStrength;
+        lantern.style.transform = `translate(${moveX}px, ${moveY}px)`;
     });
 }
