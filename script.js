@@ -13,27 +13,30 @@ document.addEventListener('DOMContentLoaded', () => {
     createStars(50);
 });
 
-// ランタンを生成する関数（一部修正）
+// ランタンを生成する関数（修正）
 function createLanterns(numberOfLanterns, initial = false) {
-    // ランタンの生成をループ内で即時ではなく、ランダムな遅延後に行う
+    const lanternContainer = document.getElementById('lanterns');
+    const containerWidth = lanternContainer.offsetWidth; // コンテナの横幅
+
     for (let i = 0; i < numberOfLanterns; i++) {
         const delay = Math.random() * 2000; // 最大2秒のランダムな遅延
 
-        setTimeout(() => { // 遅延実行
+        setTimeout(() => {
             const lantern = document.createElement('div');
             lantern.classList.add('lantern');
 
-            // 初期設定は省略
+            // ランタンの左位置を画面の横幅内でランダムに設定
+            const lanternLeftPosition = Math.random() * 100; // パーセンテージで位置を決定
+            lantern.style.left = `${lanternLeftPosition}vw`; // ビューポート幅の割合で位置指定
 
             document.getElementById('lanterns').appendChild(lantern);
 
-            // アニメーション設定は省略
+            // アニメーションとその他のスタイル設定は省略
 
-        }, initial ? 0 : delay); // 初期生成時は遅延なし、それ以外はランダムな遅延を適用
+        }, initial ? i * 100 : delay); // 初期生成時は少し遅延をつけて連続的に見えるように、それ以外はランダムな遅延を適用
     }
 }
 
-// ランタン生成の間隔と数を調整する関数
 // ランタン生成の間隔と数を調整する関数（一部修正）
 function startLanternFestival() {
     const lanternContainer = document.getElementById('lanterns');
