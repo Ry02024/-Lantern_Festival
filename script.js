@@ -98,3 +98,11 @@ function applyWindToLanterns(distanceX, distanceY) {
         lantern.style.transform = `translate(${moveX}px, ${moveY}px)`;
     });
 }
+
+function showWindEffect(startX, startY, endX, endY) {
+    const windEffect = document.getElementById('windEffect');
+    windEffect.style.left = `${startX}px`;
+    windEffect.style.top = `${startY}px`;
+    const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+    windEffect.style.transform = `rotate(${angle}deg)`;
+}
