@@ -80,3 +80,12 @@ body, html {
     50% {
         opacity: 0.5;
     }
+#windEffect {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: url('wind-arrow.png') no-repeat center center; /* 例として矢印の画像を使用 */
+    background-size: contain;
+    opacity: 0; /* 最初は見えないようにしておく */
+    transition: opacity 0.5s ease-in-out;
+}
