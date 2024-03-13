@@ -13,57 +13,48 @@ document.addEventListener('DOMContentLoaded', () => {
     createStars(50);
 });
 
-// ランタンを生成する関数
+// ランタンを生成する関数（一部修正）
 function createLanterns(numberOfLanterns, initial = false) {
-    const lanternContainer = document.getElementById('lanterns');
-    const containerWidth = lanternContainer.offsetWidth;
-    const lanternWidth = 20; // ランタンの幅を20pxと想定
-    const lanternsPerRow = Math.floor(containerWidth / lanternWidth);
-
+    // ランタンの生成をループ内で即時ではなく、ランダムな遅延後に行う
     for (let i = 0; i < numberOfLanterns; i++) {
-        const lantern = document.createElement('div');
-        lantern.classList.add('lantern');
+        const delay = Math.random() * 2000; // 最大2秒のランダムな遅延
 
-        if (initial) {
-            // 初期表示の場合、ランタンを一列に敷き詰める
-            lantern.style.left = `${(i % lanternsPerRow) * lanternWidth}px`;
-        } else {
-            // 通常のランダム位置生成
-            lantern.style.left = `${Math.random() * 100}vw`;
-        }
+        setTimeout(() => { // 遅延実行
+            const lantern = document.createElement('div');
+            lantern.classList.add('lantern');
 
-        document.getElementById('lanterns').appendChild(lantern);
+            // 初期設定は省略
 
-        const duration = 10 + Math.random() * 15; // 上昇スピードをランダム化
-        lantern.style.animationDuration = `${duration}s`;
+            document.getElementById('lanterns').appendChild(lantern);
 
-        // アニメーションと初期位置設定
-        lantern.style.animationName = 'floatUp, glow';
-        lantern.style.animationTimingFunction = 'ease-in, ease-in-out';
-        lantern.style.animationIterationCount = 'forwards, infinite';
+            // アニメーション設定は省略
 
-        lantern.addEventListener('animationend', () => {
-            lantern.remove();
-        });
+        }, initial ? 0 : delay); // 初期生成時は遅延なし、それ以外はランダムな遅延を適用
     }
 }
 
 // ランタン生成の間隔と数を調整する関数
+// ランタン生成の間隔と数を調整する関数（一部修正）
 function startLanternFestival() {
-    // 最初に一列のランタンを生成
     const lanternContainer = document.getElementById('lanterns');
     const containerWidth = lanternContainer.offsetWidth;
-    const lanternWidth = 20; // ランタンの幅をpx単位で指定
-    const lanternsPerRow = Math.floor(containerWidth / lanternWidth); // 画面幅に収まるランタンの数
+    const lanternWidth = 20;
+    const lanternsPerRow = Math.floor(containerWidth / lanternWidth);
 
-    createLanterns(lanternsPerRow, true); // 画面の下一面にランタンを一列に敷き詰めて生成
+    createLanterns(lanternsPerRow, true); // 初期表示で一列のランタンを生成
 
-    // 一列のランタンが生成された後、定期的にランタンを追加
-    setTimeout(() => {
-        setInterval(() => {
-            createLanterns(10); // 一度に10個のランタンを生成
-        }, 3000); // 3秒ごとにランタンを生成
-    }, 300); // 最初のランタンが若干上がり始めてから次のランタン生成を開始
+    // 定期的にランタンを追加する処理を修正
+    // ここでは`setInterval`を使わず、連続してランダムなタイミングでランタンを生成
+    function addRandomLantern() {
+        const randomDelay = 500 + Math.random() * 2500; // 0.5秒から3秒のランダムな遅延
+
+        setTimeout(() => {
+            createLanterns(1); // 一度に1個のランタンを生成
+            addRandomLantern(); // 再帰的に次のランタン生成をスケジュール
+        }, randomDelay);
+    }
+
+    addRandomLantern(); // ランタン追加処理を開始
 }
 
 // ページ読み込み完了時にランタンフェスティバルを開始
