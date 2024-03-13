@@ -14,21 +14,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ランタンを生成する関数
-function createLanterns(numberOfLanterns) {
+function createLanterns(numberOfLanterns, initial = false) {
+    const lanternContainer = document.getElementById('lanterns');
+    const containerWidth = lanternContainer.offsetWidth;
+    const lanternWidth = 20; // ランタンの幅を20pxと想定
+    const lanternsPerRow = Math.floor(containerWidth / lanternWidth);
+
     for (let i = 0; i < numberOfLanterns; i++) {
         const lantern = document.createElement('div');
         lantern.classList.add('lantern');
-        lantern.style.left = `${Math.random() * 100}vw`;
+
+        if (initial) {
+            // 初期表示の場合、ランタンを一列に敷き詰める
+            lantern.style.left = `${(i % lanternsPerRow) * lanternWidth}px`;
+        } else {
+            // 通常のランダム位置生成
+            lantern.style.left = `${Math.random() * 100}vw`;
+        }
+
         document.getElementById('lanterns').appendChild(lantern);
 
-        const duration = 10 + Math.random() * 15;
+        const duration = 10 + Math.random() * 15; // 上昇スピードをランダム化
         lantern.style.animationDuration = `${duration}s`;
 
         // アニメーションと初期位置設定
         lantern.style.animationName = 'floatUp, glow';
         lantern.style.animationTimingFunction = 'ease-in, ease-in-out';
         lantern.style.animationIterationCount = 'forwards, infinite';
-        lantern.style.transform = `translateX(${windX}vw)`;
 
         lantern.addEventListener('animationend', () => {
             lantern.remove();
@@ -38,10 +50,20 @@ function createLanterns(numberOfLanterns) {
 
 // ランタン生成の間隔と数を調整する関数
 function startLanternFestival() {
+    // 最初に一列のランタンを生成
+    const lanternContainer = document.getElementById('lanterns');
+    const containerWidth = lanternContainer.offsetWidth;
+    const lanternWidth = 20; // ランタンの幅
+    const lanternsPerRow = Math.floor(containerWidth / lanternWidth);
+
+    createLanterns(lanternsPerRow, true); // 初期表示で一列のランタンを生成
+
     setInterval(() => {
         createLanterns(5); // 一度に2個のランタンを生成
     }, 3000); // 3秒ごとにランタンを生成
 }
+
+document.addEventListener('DOMContentLoaded', startLanternFestival);
 
 startLanternFestival();
 
