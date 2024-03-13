@@ -52,7 +52,7 @@ function startLanternFestival() {
         const randomDelay = 500 + Math.random() * 2500; // 0.5秒から3秒のランダムな遅延
 
         setTimeout(() => {
-            createLanterns(1); // 一度に1個のランタンを生成
+            createLanterns(5); // 一度に1個のランタンを生成
             addRandomLantern(); // 再帰的に次のランタン生成をスケジュール
         }, randomDelay);
     }
