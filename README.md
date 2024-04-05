@@ -35,7 +35,7 @@
 
 - HTML
 - CSS
-- バニラJavaScript
+- JavaScript
 
 ## 貢献
 
